@@ -140,13 +140,13 @@ ntpd (pid  1171) is running...
 [root@ip-172-31-36-60 ~]# service cloudera-scm-server start  
 ```
   
-Use the below command to check if start failed.
+Use the below command to check if start failed.  
 ```
-[root@ip-172-31-36-60 ~]# tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log
+[root@ip-172-31-36-60 ~]# tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log  
 ```
 
-Open the browser with URL http://Servername:7180
-username:admin,password:admin
+Open the browser with URL http://Servername:7180  
+username:admin,password:admin  
 
 9. Other steps  
 9.1. Disable SELinux  
