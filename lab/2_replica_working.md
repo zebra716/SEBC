@@ -36,7 +36,7 @@
     log-bin=mysql-bin  
     server-id=1  
       
-  > for slave  
+> for slave  
     [mysqld]  
     server-id=2  
 ```
@@ -47,13 +47,16 @@
    Initializing MySQL database:                               [  OK  ]  
    Installing validate password plugin:                       [  OK  ]  
    Starting mysqld:          
-   Use /usr/bin/mysql_secure_installation to:  
+```
+
+Use /usr/bin/mysql_secure_installation to:  
    a. Set password protection for the server  
    b. Revoke permissions for anonymous users  
    c. Permit remote privileged login  
    d. Remove test databases  
    e. Refresh privileges in memory  
    f. Refreshes the mysqld service  
+```
 [root@ip-172-31-36-60 ~]# /usr/bin/mysql_secure_installation  
      
    Securing the MySQL server deployment.  
