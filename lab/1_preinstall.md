@@ -2,7 +2,6 @@
 1. Check vm.swappiness on all your nodes  
 Set the value to 1 if necessary  
 ```
-
 [root@ip-172-31-36-60 ~]# sysctl vm.swappiness
 vm.swappiness = 1
 
@@ -12,7 +11,7 @@ vm.swappiness = 1
 [root@ip-172-31-36-60 ~]# reboot  
 [root@ip-172-31-36-60 ~]# sysctl vm.swappiness  
 vm.swappiness = 1  
-```
+```  
 
 2. Show the mount attributes of your volume(s)  
 ```
@@ -83,6 +82,7 @@ tmpfs           7.4G     0  7.4G   0% /dev/shm
               collisions:0 txqueuelen:0  
               RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)  
 ```
+
 6. Show that forward and reverse host lookups are correctly resolved  
 For /etc/hosts, use getent  
 ```
@@ -161,6 +161,8 @@ SELINUX=disabled
 [root@ip-172-31-36-60 ~]# /etc/init.d/iptables stop  
 ```
 
-9.3 Install java(optional)
+9.3 Install java(optional)  
+```
 [root@ip-172-31-36-60 ~]# yum install oracle-j2sdk1.7
+```
 
