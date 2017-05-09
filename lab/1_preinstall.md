@@ -14,7 +14,7 @@ vm.swappiness = 1
 vm.swappiness = 1  
 ```
 
-2.Show the mount attributes of your volume(s)  
+2. Show the mount attributes of your volume(s)  
 ```
 [root@ip-172-31-36-60 ~]# mount -v  
 /dev/xvde on / type ext4 (rw)  
@@ -25,8 +25,8 @@ tmpfs on /dev/shm type tmpfs (rw,rootcontext="system_u:object_r:tmpfs_t:s0")
 none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)  
 ```
 
-3.If you have ext-based volumes, list the reserve space setting  
-  XFS volumes do not support reserve space  
+3. If you have ext-based volumes, list the reserve space setting  
+XFS volumes do not support reserve space  
 ```
 [root@ip-172-31-36-60 ~]# df -h  
 Filesystem      Size  Used Avail Use% Mounted on  
@@ -49,8 +49,8 @@ Filesystem      Size  Used Avail Use% Mounted on
 /dev/xvde        30G  778M   28G   3% /  
 tmpfs           7.4G     0  7.4G   0% /dev/shm  
 ```
-4.Disable transparent hugepage support  
-  Add transparent_hugepage=never at the end of kernel line in /etc/grub.conf file.  
+4. Disable transparent hugepage support  
+   Add transparent_hugepage=never at the end of kernel line in /etc/grub.conf file.  
 ```
 [root@ip-172-31-36-60 ~]# vi /etc/grub.conf
     default=0
@@ -61,7 +61,7 @@ tmpfs           7.4G     0  7.4G   0% /dev/shm
         kernel /boot/vmlinuz-2.6.32-431.el6.x86_64 root=LABEL=centos_root ro transparent_hugepage=never
         initrd /boot/initramfs-2.6.32-431.el6.x86_64.img
 ```
-5.List your network interface configuration   
+5. List your network interface configuration   
 ```
 [root@ip-172-31-36-60 ~]# ifconfig  
     eth0      Link encap:Ethernet  HWaddr 06:0F:B4:8C:05:9E  
@@ -83,14 +83,14 @@ tmpfs           7.4G     0  7.4G   0% /dev/shm
               collisions:0 txqueuelen:0  
               RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)  
 ```
-6.Show that forward and reverse host lookups are correctly resolved  
-  For /etc/hosts, use getent  
+6. Show that forward and reverse host lookups are correctly resolved  
+For /etc/hosts, use getent  
 ```
 [root@ip-172-31-36-60 ~]# getent hosts  
 127.0.0.1       localhost.localdomain localhost  
 127.0.0.1       localhost6.localdomain6 localhost6  
 ```
-  For DNS, use nslookup
+For DNS, use nslookup
 ```
 [root@ip-172-31-36-60 ~]# yum install bind-utils  
 [root@ip-172-31-36-60 ~]# nslookup localhost  
@@ -101,7 +101,7 @@ tmpfs           7.4G     0  7.4G   0% /dev/shm
     Address: 127.0.0.1  
 ```
 
-6.Show the nscd service is running  
+6. Show the nscd service is running  
 ```
 [root@ip-172-31-36-60 ~]# service nscd status  
 nscd: unrecognized service  
@@ -116,7 +116,7 @@ nscd (pid  1195) is running...
 
 ```
 
-7.Show the ntpd service is running
+7. Show the ntpd service is running
 ```
 [root@ip-172-31-36-60 ~]# service ntpd status  
 ntpd: unrecognized service  
@@ -129,36 +129,38 @@ Starting ntpd:                                             [  OK  ]
 [root@ip-172-31-36-60 ~]# service ntpd status  
 ntpd (pid  1171) is running...  
 ```
+  
+8. Install cloudera-manager-server  
+```
+[root@ip-172-31-36-60 ~]# cd /etc/yum.repos.d
+[root@ip-172-31-36-60 ~]# yum install wget
+[root@ip-172-31-36-60 ~]# wget https://archive.cloudera.com/cm5/redhat/6/x86_64/cm/cloudera-manager.repo
+[root@ip-172-31-36-60 ~]# yum install cloudera-manager-daemons cloudera-manager-server  
+[root@ip-172-31-36-60 ~]# /usr/share/cmf/schema/scm_prepare_database.sh mysql cm root 123456  
+[root@ip-172-31-36-60 ~]# service cloudera-scm-server start  
+```
+  
+Use the below command to check if start failed.
+```
+[root@ip-172-31-36-60 ~]# tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log
+```
 
-8.Other steps  
-8.1.Disable SELinux  
+Open the browser with URL http://Servername:7180
+username:admin,password:admin
+
+9. Other steps  
+9.1. Disable SELinux  
 ```
 [root@ip-172-31-36-60 ~]# vi /etc/selinux/config  
 SELINUX=disabled  
 ```
   
-8.2.Disable and stop IPTables  
+9.2. Disable and stop IPTables  
 ```
 [root@ip-172-31-36-60 ~]# chkconfig --level 35 iptables off  
 [root@ip-172-31-36-60 ~]# /etc/init.d/iptables stop  
 ```
 
-----------------------The below optional------------------------
-
-cd /etc/yum.repos.d
-yum install wget
-wget https://archive.cloudera.com/cm5/redhat/6/x86_64/cm/cloudera-manager.repo
-
-yum install oracle-j2sdk1.7
-
-
-yum install cloudera-manager-daemons cloudera-manager-server
-/usr/share/cmf/schema/scm_prepare_database.sh mysql cm root 123456
-
-service cloudera-scm-server start
-
-tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log
-
-http://Server host:7180
-admin/admin
+9.3 Install java(optional)
+[root@ip-172-31-36-60 ~]# yum install oracle-j2sdk1.7
 
