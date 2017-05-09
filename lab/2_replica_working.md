@@ -7,7 +7,7 @@
 [root@ip-172-31-36-60 ~]# wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.42.tar.gz  
 [root@ip-172-31-36-60 ~]# tar zxvf mysql-connector-java-5.1.42.tar.gz  
 [root@ip-172-31-36-60 ~]# cp ./mysql-connector-java-5.1.42/mysql-connector-java-5.1.42-bin.jar /usr/share/java/oracle-connector-java.jar 
-[root@ip-172-31-36-60 ~]# cp ./mysql-connector-java-5.1.42/mysql-connector-java-5.1.42-bin.jar /usr/share/java/mysql-connector-java.jar ```
+[root@ip-172-31-36-60 ~]# cp ./mysql-connector-java-5.1.42/mysql-connector-java-5.1.42-bin.jar /usr/share/java/mysql-connector-java.jar   ```
 
 2. Change the password of root user to 123456  
 ```
