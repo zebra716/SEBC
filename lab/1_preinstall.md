@@ -1,5 +1,5 @@
+  
 1. Check vm.swappiness on all your nodes  
-
 Set the value to 1 if necessary  
 ```
 
@@ -17,37 +17,37 @@ vm.swappiness = 1
 2.Show the mount attributes of your volume(s)  
 ```
 [root@ip-172-31-36-60 ~]# mount -v  
-    /dev/xvde on / type ext4 (rw)  
-    proc on /proc type proc (rw)  
-    sysfs on /sys type sysfs (rw)  
-    devpts on /dev/pts type devpts (rw,gid=5,mode=620)  
-    tmpfs on /dev/shm type tmpfs (rw,rootcontext="system_u:object_r:tmpfs_t:s0")  
-    none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)  
+/dev/xvde on / type ext4 (rw)  
+proc on /proc type proc (rw)  
+sysfs on /sys type sysfs (rw)  
+devpts on /dev/pts type devpts (rw,gid=5,mode=620)  
+tmpfs on /dev/shm type tmpfs (rw,rootcontext="system_u:object_r:tmpfs_t:s0")  
+none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)  
 ```
 
 3.If you have ext-based volumes, list the reserve space setting  
   XFS volumes do not support reserve space  
 ```
 [root@ip-172-31-36-60 ~]# df -h  
-    Filesystem      Size  Used Avail Use% Mounted on  
-    /dev/xvde       7.9G  774M  6.8G  11% /  
-    tmpfs           7.4G     0  7.4G   0% /dev/shm  
+Filesystem      Size  Used Avail Use% Mounted on  
+/dev/xvde       7.9G  774M  6.8G  11% /  
+tmpfs           7.4G     0  7.4G   0% /dev/shm  
   
 [root@ip-172-31-36-60 ~]# lsblk  
-    NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT  
-    xvde 202:64   0  30G  0 disk /  
+NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT  
+xvde 202:64   0  30G  0 disk /  
 
 [root@ip-172-31-36-60 ~]# resize2fs /dev/xvde  
-    resize2fs 1.41.12 (17-May-2010)  
-    Filesystem at /dev/xvde is mounted on /; on-line resizing required  
-    old desc_blocks = 1, new_desc_blocks = 2  
-    Performing an on-line resize of /dev/xvde to 7864320 (4k) blocks.  
-    The filesystem on /dev/xvde is now 7864320 blocks long.  
+resize2fs 1.41.12 (17-May-2010)  
+Filesystem at /dev/xvde is mounted on /; on-line resizing required  
+old desc_blocks = 1, new_desc_blocks = 2  
+Performing an on-line resize of /dev/xvde to 7864320 (4k) blocks.  
+The filesystem on /dev/xvde is now 7864320 blocks long.  
   
 [root@ip-172-31-36-60 ~]# df -h  
-    Filesystem      Size  Used Avail Use% Mounted on  
-    /dev/xvde        30G  778M   28G   3% /  
-    tmpfs           7.4G     0  7.4G   0% /dev/shm  
+Filesystem      Size  Used Avail Use% Mounted on  
+/dev/xvde        30G  778M   28G   3% /  
+tmpfs           7.4G     0  7.4G   0% /dev/shm  
 ```
 4.Disable transparent hugepage support  
   Add transparent_hugepage=never at the end of kernel line in /etc/grub.conf file.  
@@ -87,8 +87,8 @@ vm.swappiness = 1
   For /etc/hosts, use getent  
 ```
 [root@ip-172-31-36-60 ~]# getent hosts  
-    127.0.0.1       localhost.localdomain localhost  
-    127.0.0.1       localhost6.localdomain6 localhost6  
+127.0.0.1       localhost.localdomain localhost  
+127.0.0.1       localhost6.localdomain6 localhost6  
 ```
   For DNS, use nslookup
 ```
@@ -105,32 +105,43 @@ vm.swappiness = 1
 ```
 [root@ip-172-31-36-60 ~]# service nscd status  
 nscd: unrecognized service  
+
 [root@ip-172-31-36-60 ~]# yum install nscd  
+
 [root@ip-172-31-36-60 ~]# service nscd start  
 Starting nscd:                                             [  OK  ]  
+
 [root@ip-172-31-36-60 ~]# service nscd status  
 nscd (pid  1195) is running...  
+
 ```
 
 7.Show the ntpd service is running
 ```
 [root@ip-172-31-36-60 ~]# service ntpd status  
 ntpd: unrecognized service  
+
 [root@ip-172-31-36-60 ~]# yum install ntp  
+
 [root@ip-172-31-36-60 ~]# service ntpd start  
 Starting ntpd:                                             [  OK  ]  
+
 [root@ip-172-31-36-60 ~]# service ntpd status  
 ntpd (pid  1171) is running...  
 ```
 
-8.Other steps
-8.1.Disable SELinux
-[root@ip-172-31-36-60 ~]# vi /etc/selinux/config
-SELINUX=disabled 
-
-8.2.Disable and stop IPTables
-[root@ip-172-31-36-60 ~]# chkconfig --level 35 iptables off
-[root@ip-172-31-36-60 ~]# /etc/init.d/iptables stop
+8.Other steps  
+8.1.Disable SELinux  
+```
+[root@ip-172-31-36-60 ~]# vi /etc/selinux/config  
+SELINUX=disabled  
+```
+  
+8.2.Disable and stop IPTables  
+```
+[root@ip-172-31-36-60 ~]# chkconfig --level 35 iptables off  
+[root@ip-172-31-36-60 ~]# /etc/init.d/iptables stop  
+```
 
 ----------------------The below optional------------------------
 
