@@ -5,10 +5,6 @@ or use curl in command:
 It returns value as following:  
 
 ```
-    JSON
-    原始数据
-    头
-
 {
   "timestamp" : "2017-05-10T06:35:37.962Z",
   "clusters" : [ {
