@@ -1,6 +1,6 @@
-i is Mapper containers
+i is Mapper containers  
 j is Reducer containers  
-k is Container memory
+k is Container memory  
   
 The below are the fastest parameter, and all duration are 19s.
   
