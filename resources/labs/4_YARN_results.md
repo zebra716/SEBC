@@ -2,17 +2,18 @@ i is Mapper containers
 j is Reducer containers  
 k is Container memory  
   
-The below are the fastest parameter, and all duration are 19s.
-  
+The below are the fastest parameters, and all duration are 19s.
+```
 i=1	j=4	k=512  
 i=4	j=8	k=512  
 i=6	j=2	k=512  
 i=6	j=8	k=1024  
-    
-The below are the slowest parameter, and all duration are 23s.
-  
+```    
+
+The below is the slowest parameter, and all duration are 23s.
+```
 i=6	j=4	k=512
-  
+```  
 
 The below are detail:
 ```  
