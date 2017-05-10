@@ -37,8 +37,12 @@ V16
 
 4. Report the database server in use by CM  
 ```
-
+[root@ip-172-31-36-60 ~]# curl -X GET -u zebra716:cloudera 'http://34.210.70.178:7180/api/v16/cm/scmDbInfo'
+{
+  "scmDbType" : "MYSQL",
+  "embeddedDbUsed" : false
+}
 ```  
 
-Add these API calls and their output to enterprise/labs/4_API_upgrade_calls.md
-Label the Issue review
+Add these API calls and their output to enterprise/labs/4_API_upgrade_calls.md  
+Label the Issue review  
