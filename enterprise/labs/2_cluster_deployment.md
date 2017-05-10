@@ -1,3 +1,5 @@
+Open URL http://34.210.70.178:7180/api/v2/cm/deployment in Browser, return value as following:  
+
 ```
 {  
   "timestamp" : "2017-05-10T05:42:43.337Z",  
