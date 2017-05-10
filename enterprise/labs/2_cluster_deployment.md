@@ -1,4 +1,8 @@
-Open URL http://34.210.70.178:7180/api/v2/cm/deployment in Browser, return value as following:  
+Open URL http://34.210.70.178:7180/api/v2/cm/deployment in Browser,   
+or use curl in command:  
+[root@ip-172-31-36-60 ~]# curl -u zebra716:cloudera 'http://34.210.70.178:7180/pi/v2/cm/deployment'  
+
+It returns value as following:  
 
 ```
 {  
