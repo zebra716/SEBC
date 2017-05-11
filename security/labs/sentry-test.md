@@ -26,7 +26,7 @@ No rows selected (2.449 seconds)
 
 Create a Sentry role with full authorization  
 In beeline:  
-````
+```
 0: jdbc:hive2://ip-172-31-36-60.us-west-2.com> CREATE ROLE sentry_admin;
 INFO  : Compiling command(queryId=hive_20170511040404_cc9b6239-fa28-47b9-b9fb-796764ead911): CREATE ROLE sentry_admin
 INFO  : Semantic Analysis Completed
@@ -148,5 +148,94 @@ INFO  : Starting task [Stage-0:DDL] in serial mode
 INFO  : Completed executing command(queryId=hive_20170511041515_b4e53813-4cc2-4883-b1bb-c857a6583298); Time taken: 0.036 seconds
 INFO  : OK
 No rows affected (0.131 seconds)
+```  
+
+Grant read privilege for default.sample07 only to 'writes':  
+```
+0: jdbc:hive2://ip-172-31-36-60.us-west-2.com> GRANT SELECT ON default.sample_07 to ROLE writes;
+INFO  : Compiling command(queryId=hive_20170511041818_63b85c8b-aa49-4f88-a977-742b745b980b): GRANT SELECT ON default.sample_07 to ROLE writes
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20170511041818_63b85c8b-aa49-4f88-a977-742b745b980b); Time taken: 0.062 seconds
+INFO  : Executing command(queryId=hive_20170511041818_63b85c8b-aa49-4f88-a977-742b745b980b): GRANT SELECT ON default.sample_07 to ROLE writes
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20170511041818_63b85c8b-aa49-4f88-a977-742b745b980b); Time taken: 0.036 seconds
+INFO  : OK
+No rows affected (0.114 seconds)
+0: jdbc:hive2://ip-172-31-36-60.us-west-2.com> GRANT ROLE writes to GROUP inserters;
+INFO  : Compiling command(queryId=hive_20170511041818_d8c7c315-1ad0-4810-aaf8-63c30e87a6df): GRANT ROLE writes to GROUP inserters
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20170511041818_d8c7c315-1ad0-4810-aaf8-63c30e87a6df); Time taken: 0.067 seconds
+INFO  : Executing command(queryId=hive_20170511041818_d8c7c315-1ad0-4810-aaf8-63c30e87a6df): GRANT ROLE writes to GROUP inserters
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20170511041818_d8c7c315-1ad0-4810-aaf8-63c30e87a6df); Time taken: 0.041 seconds
+INFO  : OK
+No rows affected (0.125 seconds)
+```  
+
+kinit as george, then login to beeline  
+kinit as george, login to beeline, and use SHOW TABLES;
+
+george should be able to see all tables
+```
+[root@ip-172-31-36-60 ~]# kinit george
+Password for george@HADOOP.COM:
+
+[root@ip-172-31-36-60 ~]# beeline
+beeline> !connect jdbc:hive2://ip-172-31-36-60.us-west-2.compute.internal:10000/default;principal=hive/ip-172-31-36-60.us-west-2.compute.internal@HADOOP.COM
+scan complete in 4ms
+Connecting to jdbc:hive2://ip-172-31-36-60.us-west-2.compute.internal:10000/default;principal=hive/ip-172-31-36-60.us-west-2.compute.internal@HADOOP.COM
+Connected to: Apache Hive (version 1.1.0-cdh5.11.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.11.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://ip-172-31-36-60.us-west-2.com> SHOW TABLES;
+INFO  : Compiling command(queryId=hive_20170511042222_575647f8-de68-4634-b197-861a172a8827): SHOW TABLES
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20170511042222_575647f8-de68-4634-b197-861a172a8827); Time taken: 0.074 seconds
+INFO  : Executing command(queryId=hive_20170511042222_575647f8-de68-4634-b197-861a172a8827): SHOW TABLES
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20170511042222_575647f8-de68-4634-b197-861a172a8827); Time taken: 0.142 seconds
+INFO  : OK
++------------+--+
+|  tab_name  |
++------------+--+
+| customers  |
+| sample_07  |
+| sample_08  |
+| web_logs   |
++------------+--+
+4 rows selected (0.328 seconds)
+
+```  
+
+Repeat the process as ferdinand
+ferdinand should see sample_07
+```
+[root@ip-172-31-36-60 ~]# beeline
+Beeline version 1.1.0-cdh5.11.0 by Apache Hive
+beeline> !connect jdbc:hive2://ip-172-31-36-60.us-west-2.compute.internal:10000/default;principal=hive/ip-172-31-36-60.us-west-2.compute.internal@HADOOP.COM
+scan complete in 2ms
+Connecting to jdbc:hive2://ip-172-31-36-60.us-west-2.compute.internal:10000/default;principal=hive/ip-172-31-36-60.us-west-2.compute.internal@HADOOP.COM
+Connected to: Apache Hive (version 1.1.0-cdh5.11.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.11.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://ip-172-31-36-60.us-west-2.com> SHOW TABLES;
+INFO  : Compiling command(queryId=hive_20170511042424_a794075b-3be4-423f-881f-9f080f7e2875): SHOW TABLES
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20170511042424_a794075b-3be4-423f-881f-9f080f7e2875); Time taken: 0.085 seconds
+INFO  : Executing command(queryId=hive_20170511042424_a794075b-3be4-423f-881f-9f080f7e2875): SHOW TABLES
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20170511042424_a794075b-3be4-423f-881f-9f080f7e2875); Time taken: 0.142 seconds
+INFO  : OK
++------------+--+
+|  tab_name  |
++------------+--+
+| sample_07  |
++------------+--+
+1 row selected (0.338 seconds)
+
 ```  
 
