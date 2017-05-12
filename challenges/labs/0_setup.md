@@ -1,4 +1,3 @@
-Challenge Setup  
 List the cloud provider you are using (AWS, GCE, Azure, other)  
 ```
 AWS
