@@ -42,3 +42,14 @@ updates                        CentOS-6 - Updates                           270
 repolist: 7,040
 ```  
 
+List the /etc/passwd entries for zhou and chen  
+```
+[root@ip-172-31-41-99 ~]#  cat /etc/passwd|grep zhou
+zhou:x:2800:2800::/home/zhou:/bin/bash
+```  
+
+List the /etc/group entries for shanghai and beijing  
+```
+[root@ip-172-31-41-99 ~]#  cat /etc/passwd|grep chen
+chen:x:2900:2900::/home/chen:/bin/bash
+```  
